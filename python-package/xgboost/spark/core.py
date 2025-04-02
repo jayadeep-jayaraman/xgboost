@@ -45,6 +45,7 @@ from pyspark.ml.util import (
     MLReader,
     MLWritable,
     MLWriter,
+    try_remote_fit,
 )
 from pyspark.resource import ResourceProfileBuilder, TaskResourceRequests
 from pyspark.sql import Column, DataFrame
@@ -1045,6 +1046,7 @@ class _SparkXGBEstimator(Estimator, _SparkXGBParams, MLReadable, MLWritable):
                     )
         return launch_tracker_on_driver, rabit_args
 
+    @try_remote_fit
     def _fit(self, dataset: DataFrame) -> "_SparkXGBModel":
         # pylint: disable=too-many-statements, too-many-locals
         self._validate_params()
